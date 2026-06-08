@@ -65,17 +65,17 @@ BrewMap is a Flutter application that lets you search breweries from the [Open B
 | Testing              | `flutter_test`, `bloc_test`, `mocktail`, `gherkart` (Gherkin BDD) |
 
 
-All Flutter CLI commands in this repo are run through **[FVM](https://fvm.app/)** (`fvm flutter …`) to pin the SDK version.
+All Flutter CLI commands in this repo can be run via through **[FVM](https://fvm.app/)** (`fvm flutter …`) to pin the SDK version.
 
 ---
 
 ## Prerequisites
 
-- [FVM](https://fvm.app/documentation/getting-started/installation) installed and on your `PATH`
 - Flutter SDK (via FVM; currently **3.41.9** with Dart **3.11.5**)
 - For web: Chrome (or another supported browser)
 - For mobile: Xcode (iOS) and/or Android Studio with an emulator or physical device
 - Optional — [Node.js](https://nodejs.org/) LTS if you use the **brewmap-devkit** MCP server in Cursor
+- Optional — [FVM](https://fvm.app/documentation/getting-started/installation) installed and on your `PATH`
 
 ---
 
@@ -84,7 +84,7 @@ All Flutter CLI commands in this repo are run through **[FVM](https://fvm.app/)*
 ```bash
 git clone https://github.com/renatafariaoliveira/brewmap.git
 cd brewmap
-fvm flutter pub get
+flutter pub get
 ```
 
 ### Run the app
@@ -92,20 +92,20 @@ fvm flutter pub get
 **Web (recommended for development):**
 
 ```bash
-fvm flutter run -d chrome
+flutter run -d chrome
 ```
 
 **Android / iOS:**
 
 ```bash
-fvm flutter devices
-fvm flutter run -d <device_id>
+flutter devices
+flutter run -d <device_id>
 ```
 
 **Release build (web):**
 
 ```bash
-fvm flutter build web
+flutter build web
 ```
 
 Output is written to `build/web/`.
@@ -113,7 +113,7 @@ Output is written to `build/web/`.
 ### Static analysis
 
 ```bash
-fvm flutter analyze
+flutter analyze
 ```
 
 ---
@@ -154,7 +154,7 @@ lib/
 `BreweryState` uses `@CopyWith` from `copy_with_extension`. Regenerate after changing annotated classes:
 
 ```bash
-fvm dart run build_runner build --delete-conflicting-outputs
+dart run build_runner build --delete-conflicting-outputs
 ```
 
 ---
@@ -166,22 +166,22 @@ BrewMap has three layers of automated checks:
 
 | Layer                  | Location                     | Command                                                                                                    |
 | ---------------------- | ---------------------------- | ---------------------------------------------------------------------------------------------------------- |
-| Unit / widget          | `test/core`, `test/features` | `fvm flutter test test/core test/features --dart-define=BREWMAP_BDD_TEST=true` (~102 cases)                |
-| Live API (opt-in)      | `test/integration`           | `fvm flutter test test/integration --dart-define=BREWMAP_LIVE_API_TEST=true`                               |
-| BDD (VM, offline)      | `test/bdd` + `features/bdd`  | `fvm flutter test test/bdd/bdd_suite_test.dart --dart-define=BREWMAP_BDD_TEST=true`                        |
-| BDD (device, optional) | `integration_test`           | `fvm flutter test integration_test/bdd_suite_test.dart -d <device_id> --dart-define=BREWMAP_BDD_TEST=true` |
+| Unit / widget          | `test/core`, `test/features` | `flutter test test/core test/features --dart-define=BREWMAP_BDD_TEST=true` (~102 cases)                |
+| Live API (opt-in)      | `test/integration`           | `flutter test test/integration --dart-define=BREWMAP_LIVE_API_TEST=true`                               |
+| BDD (VM, offline)      | `test/bdd` + `features/bdd`  | `flutter test test/bdd/bdd_suite_test.dart --dart-define=BREWMAP_BDD_TEST=true`                        |
+| BDD (device, optional) | `integration_test`           | `flutter test integration_test/bdd_suite_test.dart -d <device_id> --dart-define=BREWMAP_BDD_TEST=true` |
 
 
 **Full manual suite:**
 
 ```bash
-fvm flutter test test/core test/features --dart-define=BREWMAP_BDD_TEST=true
-fvm flutter test test/bdd/bdd_suite_test.dart --dart-define=BREWMAP_BDD_TEST=true
+flutter test test/core test/features --dart-define=BREWMAP_BDD_TEST=true
+flutter test test/bdd/bdd_suite_test.dart --dart-define=BREWMAP_BDD_TEST=true
 ```
 
 Pass `--dart-define=BREWMAP_BDD_TEST=true` for unit/widget and BDD runs so map stubs and stable UI behavior are enabled (see `lib/core/config/brewmap_flags.dart`). Without it, map-related widget tests are skipped.
 
-Avoid bare `fvm flutter test` for routine checks — it may run BDD without the flag and skip map widget tests.
+Avoid bare `flutter test` for routine checks — it may run BDD without the flag and skip map widget tests.
 
 ### Code coverage
 
@@ -190,7 +190,7 @@ Line coverage is collected from **unit and widget tests only** (`test/core`, `te
 **Generate:**
 
 ```bash
-fvm flutter test test/core test/features --coverage --dart-define=BREWMAP_BDD_TEST=true
+flutter test test/core test/features --coverage --dart-define=BREWMAP_BDD_TEST=true
 ```
 
 Output: `coverage/lcov.info` (gitignored). **Current baseline:** ~**79%** line coverage on `lib/` (1283/1623 lines, as of the last unit/widget run with `BREWMAP_BDD_TEST`).
