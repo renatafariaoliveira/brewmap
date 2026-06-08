@@ -1,0 +1,7 @@
+{
+  "uri": "brewmap-devkit://manifest",
+  "name": "manifest",
+  "description": "Brewmap Devkit MCP manifest.",
+  "mimeType": "application/json"
+}
+

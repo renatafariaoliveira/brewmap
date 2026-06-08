@@ -1,0 +1,16 @@
+{
+  "name": "brewmap-devkit",
+  "version": "1.0.0",
+  "description": "MCP server for Brewmap development tooling (fvm-first).",
+  "main": "server.mjs",
+  "scripts": {
+    "start": "node ./server.mjs"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.29.0"
+  }
+}

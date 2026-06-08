@@ -1,0 +1,92 @@
+{
+  "name": "flutter_test",
+  "description": "Runs `fvm flutter test` for unit/widget tests (default: test/core, test/features). Use flutter_bdd for Gherkin scenarios.",
+  "arguments": {
+    "type": "object",
+    "properties": {
+      "workingDirectory": {
+        "description": "Optional working directory to run tests from.",
+        "type": "string"
+      },
+      "paths": {
+        "description": "Test files or directories. Defaults to test/core and test/features (excludes BDD).",
+        "type": "array",
+        "items": { "type": "string" },
+        "default": ["test/core", "test/features"]
+      },
+      "coverage": {
+        "description": "When true, runs with --coverage.",
+        "type": "boolean"
+      },
+      "tags": {
+        "description": "Optional test tags (passed to --tags).",
+        "type": "array",
+        "items": { "type": "string" }
+      },
+      "dartDefines": {
+        "description": "Optional --dart-define values. Default: BREWMAP_BDD_TEST=true (map stubs in widget tests).",
+        "type": "array",
+        "items": { "type": "string" },
+        "default": ["BREWMAP_BDD_TEST=true"]
+      }
+    }
+  },
+  "outputSchema": {
+    "type": "object",
+    "properties": {
+      "ok": { "type": "boolean" },
+      "tool": { "type": "string" },
+      "timestamp": { "type": "string" },
+      "summary": { "type": "string" },
+      "data": {
+        "type": "object",
+        "properties": {
+          "passed": { "type": "integer" },
+          "failed": { "type": "integer" },
+          "skipped": { "type": "integer" },
+          "failures": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "name": { "type": "string" },
+                "message": { "type": "string" },
+                "file": { "type": "string" },
+                "line": { "type": "integer" },
+                "stack": { "type": "string" }
+              },
+              "required": ["name", "message"]
+            }
+          }
+        },
+        "required": ["passed", "failed", "skipped", "failures"]
+      },
+      "errors": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "kind": { "type": "string" },
+            "message": { "type": "string" },
+            "file": { "type": "string" },
+            "line": { "type": "integer" },
+            "stack": { "type": "string" }
+          },
+          "required": ["kind", "message"]
+        }
+      },
+      "raw": {
+        "type": "object",
+        "properties": {
+          "command": { "type": "string" },
+          "exitCode": { "type": "integer" },
+          "stdout": { "type": "string" },
+          "stderr": { "type": "string" }
+        },
+        "required": ["command", "exitCode", "stdout", "stderr"]
+      }
+    },
+    "required": ["ok", "tool", "timestamp", "summary", "data", "errors", "raw"]
+  }
+}
+

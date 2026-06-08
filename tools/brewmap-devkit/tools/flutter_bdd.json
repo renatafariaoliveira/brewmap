@@ -1,0 +1,84 @@
+{
+  "name": "flutter_bdd",
+  "description": "Runs Brewmap BDD suite on the VM (offline-safe) using `fvm flutter test` and returns scenario results.",
+  "arguments": {
+    "type": "object",
+    "properties": {
+      "workingDirectory": {
+        "description": "Optional working directory to run tests from.",
+        "type": "string"
+      },
+      "entrypoint": {
+        "description": "Test entrypoint file path.",
+        "type": "string",
+        "default": "test/bdd/bdd_suite_test.dart"
+      }
+    }
+  },
+  "outputSchema": {
+    "type": "object",
+    "properties": {
+      "ok": { "type": "boolean" },
+      "tool": { "type": "string" },
+      "timestamp": { "type": "string" },
+      "summary": { "type": "string" },
+      "data": {
+        "type": "object",
+        "properties": {
+          "entrypoint": { "type": "string" },
+          "scenarios": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "name": { "type": "string" },
+                "status": { "type": "string", "enum": ["passed", "failed", "skipped", "unknown"] },
+                "error": { "type": "string" },
+                "steps": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "keyword": { "type": "string", "enum": ["Given", "When", "Then", "And", "But", "Unknown"] },
+                      "text": { "type": "string" },
+                      "status": { "type": "string", "enum": ["passed", "failed", "skipped", "unknown"] }
+                    },
+                    "required": ["keyword", "text", "status"]
+                  }
+                }
+              },
+              "required": ["name", "status"]
+            }
+          }
+        },
+        "required": ["entrypoint", "scenarios"]
+      },
+      "errors": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "kind": { "type": "string" },
+            "message": { "type": "string" },
+            "file": { "type": "string" },
+            "line": { "type": "integer" },
+            "stack": { "type": "string" }
+          },
+          "required": ["kind", "message"]
+        }
+      },
+      "raw": {
+        "type": "object",
+        "properties": {
+          "command": { "type": "string" },
+          "exitCode": { "type": "integer" },
+          "stdout": { "type": "string" },
+          "stderr": { "type": "string" }
+        },
+        "required": ["command", "exitCode", "stdout", "stderr"]
+      }
+    },
+    "required": ["ok", "tool", "timestamp", "summary", "data", "errors", "raw"]
+  }
+}
+

@@ -1,0 +1,99 @@
+{
+  "name": "quality_preflight",
+  "description": "Runs analyze, unit tests (test/core + test/features), optional BDD with BREWMAP_BDD_TEST, and optional coverage summary.",
+  "arguments": {
+    "type": "object",
+    "properties": {
+      "workingDirectory": {
+        "description": "Optional working directory to run commands from.",
+        "type": "string"
+      },
+      "runBdd": {
+        "description": "When true, runs the BDD suite entrypoint.",
+        "type": "boolean",
+        "default": true
+      },
+      "bddEntrypoint": {
+        "description": "BDD suite entrypoint file path.",
+        "type": "string",
+        "default": "test/bdd/bdd_suite_test.dart"
+      },
+      "runCoverageSummary": {
+        "description": "When true, runs unit tests with --coverage and parses coverage/lcov.info.",
+        "type": "boolean",
+        "default": true
+      },
+      "lcovPath": {
+        "description": "Path to LCOV file (used when runCoverageSummary=true).",
+        "type": "string",
+        "default": "coverage/lcov.info"
+      },
+      "minCoveragePercent": {
+        "description": "When > 0, fails the gate if total coverage is below this value.",
+        "type": "number",
+        "default": 0
+      }
+    }
+  },
+  "outputSchema": {
+    "type": "object",
+    "properties": {
+      "ok": { "type": "boolean" },
+      "tool": { "type": "string" },
+      "timestamp": { "type": "string" },
+      "summary": { "type": "string" },
+      "data": {
+        "type": "object",
+        "properties": {
+          "gateOk": { "type": "boolean" },
+          "steps": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "name": { "type": "string" },
+                "ok": { "type": "boolean" },
+                "summary": { "type": "string" }
+              },
+              "required": ["name", "ok", "summary"]
+            }
+          },
+          "coverage": {
+            "type": "object",
+            "properties": {
+              "percent": { "type": "number" },
+              "minRequiredPercent": { "type": "number" }
+            }
+          }
+        },
+        "required": ["gateOk", "steps"]
+      },
+      "errors": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "kind": { "type": "string" },
+            "message": { "type": "string" },
+            "file": { "type": "string" },
+            "line": { "type": "integer" },
+            "stack": { "type": "string" }
+          },
+          "required": ["kind", "message"]
+        }
+      },
+      "raw": {
+        "type": "object",
+        "properties": {
+          "command": { "type": "string" },
+          "exitCode": { "type": "integer" },
+          "stdout": { "type": "string" },
+          "stderr": { "type": "string" }
+        },
+        "required": ["command", "exitCode", "stdout", "stderr"]
+      }
+    },
+    "required": ["ok", "tool", "timestamp", "summary", "data", "errors", "raw"]
+  }
+}
+

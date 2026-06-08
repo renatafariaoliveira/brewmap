@@ -1,0 +1,78 @@
+{
+  "name": "flutter_analyze",
+  "description": "Runs `fvm flutter analyze` and returns structured diagnostics.",
+  "arguments": {
+    "type": "object",
+    "properties": {
+      "workingDirectory": {
+        "description": "Optional working directory to run analyze from.",
+        "type": "string"
+      }
+    }
+  },
+  "outputSchema": {
+    "type": "object",
+    "properties": {
+      "ok": { "type": "boolean" },
+      "tool": { "type": "string" },
+      "timestamp": { "type": "string", "description": "ISO-8601 timestamp (UTC recommended)." },
+      "summary": { "type": "string" },
+      "data": {
+        "type": "object",
+        "properties": {
+          "counts": {
+            "type": "object",
+            "properties": {
+              "info": { "type": "integer" },
+              "warning": { "type": "integer" },
+              "error": { "type": "integer" }
+            },
+            "required": ["info", "warning", "error"]
+          },
+          "issues": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "severity": { "type": "string", "enum": ["info", "warning", "error"] },
+                "message": { "type": "string" },
+                "file": { "type": "string" },
+                "line": { "type": "integer" },
+                "column": { "type": "integer" },
+                "rule": { "type": "string" }
+              },
+              "required": ["severity", "message"]
+            }
+          }
+        },
+        "required": ["counts", "issues"]
+      },
+      "errors": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "kind": { "type": "string" },
+            "message": { "type": "string" },
+            "file": { "type": "string" },
+            "line": { "type": "integer" },
+            "stack": { "type": "string" }
+          },
+          "required": ["kind", "message"]
+        }
+      },
+      "raw": {
+        "type": "object",
+        "properties": {
+          "command": { "type": "string" },
+          "exitCode": { "type": "integer" },
+          "stdout": { "type": "string" },
+          "stderr": { "type": "string" }
+        },
+        "required": ["command", "exitCode", "stdout", "stderr"]
+      }
+    },
+    "required": ["ok", "tool", "timestamp", "summary", "data", "errors", "raw"]
+  }
+}
+

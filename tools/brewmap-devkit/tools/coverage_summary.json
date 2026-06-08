@@ -1,0 +1,92 @@
+{
+  "name": "coverage_summary",
+  "description": "Parses `coverage/lcov.info` and returns coverage summary (total and worst files).",
+  "arguments": {
+    "type": "object",
+    "properties": {
+      "workingDirectory": {
+        "description": "Optional working directory for resolving relative paths.",
+        "type": "string"
+      },
+      "lcovPath": {
+        "description": "Path to LCOV file.",
+        "type": "string",
+        "default": "coverage/lcov.info"
+      },
+      "topN": {
+        "description": "Number of lowest-coverage files to return.",
+        "type": "integer",
+        "default": 10
+      }
+    }
+  },
+  "outputSchema": {
+    "type": "object",
+    "properties": {
+      "ok": { "type": "boolean" },
+      "tool": { "type": "string" },
+      "timestamp": { "type": "string" },
+      "summary": { "type": "string" },
+      "data": {
+        "type": "object",
+        "properties": {
+          "lcovPath": { "type": "string" },
+          "total": {
+            "type": "object",
+            "properties": {
+              "linesHit": { "type": "integer" },
+              "linesFound": { "type": "integer" },
+              "percent": { "type": "number" }
+            },
+            "required": ["linesHit", "linesFound", "percent"]
+          },
+          "worstFiles": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "path": { "type": "string" },
+                "linesHit": { "type": "integer" },
+                "linesFound": { "type": "integer" },
+                "percent": { "type": "number" }
+              },
+              "required": ["path", "linesHit", "linesFound", "percent"]
+            }
+          },
+          "uncoveredFiles": {
+            "type": "array",
+            "description": "Files with 0% coverage (when detectable).",
+            "items": { "type": "string" }
+          }
+        },
+        "required": ["lcovPath", "total", "worstFiles", "uncoveredFiles"]
+      },
+      "errors": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "kind": { "type": "string" },
+            "message": { "type": "string" },
+            "file": { "type": "string" },
+            "line": { "type": "integer" },
+            "stack": { "type": "string" }
+          },
+          "required": ["kind", "message"]
+        }
+      },
+      "raw": {
+        "type": "object",
+        "properties": {
+          "command": { "type": "string" },
+          "exitCode": { "type": "integer" },
+          "stdout": { "type": "string" },
+          "stderr": { "type": "string" }
+        },
+        "required": ["command", "exitCode", "stdout", "stderr"]
+      }
+    },
+    "required": ["ok", "tool", "timestamp", "summary", "data", "errors", "raw"]
+  }
+}
+
