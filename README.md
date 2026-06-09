@@ -58,7 +58,7 @@ BrewMap is a Flutter application that lets you search breweries from the [Open B
 
 | Layer                | Choice                                                            |
 | -------------------- | ----------------------------------------------------------------- |
-| Framework            | Flutter 3.x (Dart 3.11+)                                          |
+| Framework            | Flutter 3.x (Dart 3.12+)                                          |
 | State management     | `flutter_bloc` (`BreweryCubit`)                                   |
 | Dependency injection | `get_it`                                                          |
 | HTTP                 | `dio`                                                             |
