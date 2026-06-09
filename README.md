@@ -2,7 +2,10 @@
   <img src="assets/images/brewmap.png" alt="BrewMap logo" width="160" />
 </p>
 
+
 # BrewMap
+
+[BrewMap Web](https://brewmap-flutter.web.app)
 
 Discover craft breweries worldwide with an interactive map, filters, and favorites.
 
@@ -71,10 +74,10 @@ All Flutter CLI commands in this repo can be run via through **[FVM](https://fvm
 
 ## Prerequisites
 
-- Flutter SDK (via FVM; currently **3.41.9** with Dart **3.11.5**)
+- Flutter SDK (currently **3.44.1** with Dart **3.12.1**)
 - For web: Chrome (or another supported browser)
 - For mobile: Xcode (iOS) and/or Android Studio with an emulator or physical device
-- Optional — [Node.js](https://nodejs.org/) LTS if you use the **brewmap-devkit** MCP server in Cursor
+- Optional — [Node.js](https://nodejs.org/) LTS if you use the **brewmap-devkit** MCP server
 - Optional — [FVM](https://fvm.app/documentation/getting-started/installation) installed and on your `PATH`
 
 ---
@@ -251,7 +254,7 @@ brewmap/
 ## Acknowledgments
 
 - Data provided by [Open Brewery DB](https://www.openbrewerydb.org/) — a free, public API with information on thousands of breweries worldwide.
-- Academic project by **Renata Oliveira** (May 2026), under **Filipe Barroso**.
+- Educational project by **Renata Oliveira** (May 2026), under **Filipe Barroso**.
 
 ---
 

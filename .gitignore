@@ -46,3 +46,6 @@ app.*.map.json
 
 # Firebase local cache
 .firebase/
+
+# FVM Version Cache
+.fvm/
